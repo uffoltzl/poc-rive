@@ -1,14 +1,42 @@
 import Rive from "rive-react-native";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { useRef } from "react";
+
+const STATES = ["VAL", "YUGE", "SCV", "GMD"];
+const ARTBOARD_NAME = "";
+const STATE_MACHINE_NAME = "";
+
+function StateButton({ state, riveRef }) {
+  const onPress = () => {
+    STATES.forEach((currentState) => {
+      if (currentState === state) {
+        riveRef.current?.setInputState(STATE_MACHINE_NAME, currentState, true);
+      } else {
+        riveRef.current?.setInputState(STATE_MACHINE_NAME, currentState, false);
+      }
+    });
+  };
+  return <Button title={state} onPress={onPress} />;
+}
 
 function RiveDemo() {
+  const riveRef = useRef(null);
+
   return (
-    <Rive
-      url="https://public.rive.app/community/runtime-files/2195-4346-avatar-pack-use-case.riv"
-      artboardName="Avatar 1"
-      stateMachineName="avatar"
-      style={{ width: 400, height: 400 }}
-    />
+    <>
+      <Rive
+        ref={riveRef}
+        resourceName="scan-pass"
+        // artboardName={ARTBOARD_NAME}
+        // stateMachineName={STATE_MACHINE_NAME}
+        style={{ width: 400, height: 400 }}
+      />
+      <View style={styles.buttons}>
+        {STATES.map((state) => (
+          <StateButton key={state} state={state} riveRef={riveRef} />
+        ))}
+      </View>
+    </>
   );
 }
 
@@ -26,5 +54,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  buttons: {
+    flexDirection: "row",
   },
 });
