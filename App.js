@@ -1,11 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import Rive from "rive-react-native";
+import { StyleSheet, Text, View } from "react-native";
+
+function RiveDemo() {
+  return (
+    <Rive
+      url="https://public.rive.app/community/runtime-files/2195-4346-avatar-pack-use-case.riv"
+      artboardName="Avatar 1"
+      stateMachineName="avatar"
+      style={{ width: 400, height: 400 }}
+    />
+  );
+}
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <RiveDemo />
     </View>
   );
 }
@@ -13,8 +23,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
