@@ -3,8 +3,8 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import { useRef } from "react";
 
 const STATES = ["VAL", "YUGE", "SCV", "GMD"];
-const ARTBOARD_NAME = "";
-const STATE_MACHINE_NAME = "";
+const ARTBOARD_NAME = "SKIPASS_SCAN";
+const STATE_MACHINE_NAME = "Animation Scan skipass";
 
 function StateButton({ state, riveRef }) {
   const onPress = () => {
@@ -27,8 +27,8 @@ function RiveDemo() {
       <Rive
         ref={riveRef}
         resourceName="scan-pass"
-        // artboardName={ARTBOARD_NAME}
-        // stateMachineName={STATE_MACHINE_NAME}
+        artboardName={ARTBOARD_NAME}
+        stateMachineName={STATE_MACHINE_NAME}
         style={{ width: 400, height: 400 }}
       />
       <View style={styles.buttons}>
