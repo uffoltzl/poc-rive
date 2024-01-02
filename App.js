@@ -26,7 +26,7 @@ function RiveDemo() {
     <>
       <Rive
         ref={riveRef}
-        resourceName="scan-pass"
+        resourceName="scanpass"
         artboardName={ARTBOARD_NAME}
         stateMachineName={STATE_MACHINE_NAME}
         style={{ width: 400, height: 400 }}
