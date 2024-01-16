@@ -9,6 +9,8 @@ const path = require("path");
 // Specify the source directory of your assets
 const ASSET_SOURCE_DIR = "assets/riv";
 
+const IOS_GROUP_NAME = "Assets";
+
 const withCustomAssets = (config) => {
   config = addAndroidResources(config);
   config = addIOSResources(config);
@@ -60,7 +62,7 @@ function addIOSResources(config) {
     const platformProjectRoot = config.modRequest.platformProjectRoot;
 
     // Create Assets group in project
-    IOSConfig.XcodeUtils.ensureGroupRecursively(project, "Assets");
+    IOSConfig.XcodeUtils.ensureGroupRecursively(project, IOS_GROUP_NAME);
 
     // Get riv filepaths
     const projectRoot = config.modRequest.projectRoot;
@@ -81,7 +83,7 @@ function addIOSResources(config) {
       const riveFilePath = path.relative(platformRoot, riveFile);
       IOSConfig.XcodeUtils.addResourceFileToGroup({
         filepath: riveFilePath,
-        groupName: "Assets",
+        groupName: IOS_GROUP_NAME,
         project,
         isBuildFile: true,
         verbose: true,
