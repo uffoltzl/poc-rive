@@ -9,7 +9,7 @@ const path = require("path");
 // Specify the source directory of your assets
 const ASSET_SOURCE_DIR = "assets/riv";
 
-const IOS_GROUP_NAME = "Assets";
+const IOS_GROUP_NAME = "Rivassets";
 
 const withCustomAssets = (config) => {
   config = addAndroidResources(config);
