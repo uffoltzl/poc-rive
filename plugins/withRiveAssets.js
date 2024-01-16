@@ -1,9 +1,14 @@
-const { withDangerousMod } = require("@expo/config-plugins");
+const {
+  withDangerousMod,
+  withXcodeProject,
+  IOSConfig,
+} = require("@expo/config-plugins");
 const fs = require("fs-extra");
 const path = require("path");
 
 const withCustomAssets = (config) => {
   config = modifyResourcesAndroid(config);
+  config = modifyResourcesIOS(config);
   return config;
 };
 
@@ -84,6 +89,43 @@ function modifyResourcesAndroid(config) {
       return config;
     },
   ]);
+}
+
+function modifyResourcesIOS(config) {
+  const assetsSourceDir = "assets/riv";
+  return withXcodeProject(config, async (config) => {
+    const project = config.modResults;
+    const platformProjectRoot = config.modRequest.platformProjectRoot;
+
+    // Create Assets group in project
+    IOSConfig.XcodeUtils.ensureGroupRecursively(project, "Assets");
+
+    // Get riv filepaths
+    const projectRoot = config.modRequest.projectRoot;
+    const assetsSourceDirPath = path.join(projectRoot, assetsSourceDir);
+    const assetFiles = await fs.readdir(assetsSourceDirPath);
+    const assetFilesPaths = assetFiles.map(
+      (assetFile) => `${assetsSourceDirPath}/${assetFile}`
+    );
+
+    // Add assets to group
+    addResourceFile(project, platformProjectRoot, assetFilesPaths);
+
+    return config;
+  });
+
+  function addResourceFile(project, platformRoot, assetFilesPaths) {
+    for (const riveFile of assetFilesPaths) {
+      const riveFilePath = path.relative(platformRoot, riveFile);
+      IOSConfig.XcodeUtils.addResourceFileToGroup({
+        filepath: riveFilePath,
+        groupName: "Assets",
+        project,
+        isBuildFile: true,
+        verbose: true,
+      });
+    }
+  }
 }
 
 module.exports = withCustomAssets;
