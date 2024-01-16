@@ -6,6 +6,9 @@ const {
 const fs = require("fs-extra");
 const path = require("path");
 
+// Specify the source directory of your assets
+const ASSET_SOURCE_DIR = "assets/riv";
+
 const withCustomAssets = (config) => {
   config = addAndroidResources(config);
   config = addIOSResources(config);
@@ -13,9 +16,6 @@ const withCustomAssets = (config) => {
 };
 
 function addAndroidResources(config) {
-  // Specify the source directory of your assets
-  const assetSourceDir = "assets/riv";
-
   return withDangerousMod(config, [
     "android",
     async (config) => {
@@ -37,7 +37,7 @@ function addAndroidResources(config) {
       fs.ensureDirSync(rawDir);
 
       // Get the path to the assets directory
-      const assetSourcePath = path.join(projectRoot, assetSourceDir);
+      const assetSourcePath = path.join(projectRoot, ASSET_SOURCE_DIR);
 
       // Retrieve all files in the assets directory
       const assetFiles = await fs.readdir(assetSourcePath);
@@ -55,7 +55,6 @@ function addAndroidResources(config) {
 }
 
 function addIOSResources(config) {
-  const assetsSourceDir = "assets/riv";
   return withXcodeProject(config, async (config) => {
     const project = config.modResults;
     const platformProjectRoot = config.modRequest.platformProjectRoot;
@@ -65,10 +64,10 @@ function addIOSResources(config) {
 
     // Get riv filepaths
     const projectRoot = config.modRequest.projectRoot;
-    const assetsSourceDirPath = path.join(projectRoot, assetsSourceDir);
-    const assetFiles = await fs.readdir(assetsSourceDirPath);
+    const assetSourcePath = path.join(projectRoot, ASSET_SOURCE_DIR);
+    const assetFiles = await fs.readdir(assetSourcePath);
     const assetFilesPaths = assetFiles.map(
-      (assetFile) => `${assetsSourceDirPath}/${assetFile}`
+      (assetFile) => `${assetSourcePath}/${assetFile}`
     );
 
     // Add assets to group
