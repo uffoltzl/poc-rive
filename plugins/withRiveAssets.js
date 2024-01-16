@@ -7,12 +7,12 @@ const fs = require("fs-extra");
 const path = require("path");
 
 const withCustomAssets = (config) => {
-  config = modifyResourcesAndroid(config);
-  config = modifyResourcesIOS(config);
+  config = addAndroidResources(config);
+  config = addIOSResources(config);
   return config;
 };
 
-function modifyResourcesAndroid(config) {
+function addAndroidResources(config) {
   // Specify the source directory of your assets
   const assetSourceDir = "assets/riv";
 
@@ -91,7 +91,7 @@ function modifyResourcesAndroid(config) {
   ]);
 }
 
-function modifyResourcesIOS(config) {
+function addIOSResources(config) {
   const assetsSourceDir = "assets/riv";
   return withXcodeProject(config, async (config) => {
     const project = config.modResults;
@@ -109,12 +109,12 @@ function modifyResourcesIOS(config) {
     );
 
     // Add assets to group
-    addResourceFile(project, platformProjectRoot, assetFilesPaths);
+    addIOSResourceFile(project, platformProjectRoot, assetFilesPaths);
 
     return config;
   });
 
-  function addResourceFile(project, platformRoot, assetFilesPaths) {
+  function addIOSResourceFile(project, platformRoot, assetFilesPaths) {
     for (const riveFile of assetFilesPaths) {
       const riveFilePath = path.relative(platformRoot, riveFile);
       IOSConfig.XcodeUtils.addResourceFileToGroup({
