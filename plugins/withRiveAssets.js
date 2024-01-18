@@ -8,7 +8,7 @@ const {
   withXcodeProject,
   IOSConfig,
 } = require("@expo/config-plugins");
-const fs = require("fs-extra");
+const fs = require("fs");
 const path = require("path");
 
 // Specify the source directory of your assets
@@ -41,13 +41,13 @@ function addAndroidResources(config) {
 
       // Create the 'raw' directory if it doesn't exist
       const rawDir = path.join(resDir, "raw");
-      fs.ensureDirSync(rawDir);
+      fs.mkdirSync(rawDir, { recursive: true });
 
       // Get the path to the assets directory
       const assetSourcePath = path.join(projectRoot, ASSET_SOURCE_DIR);
 
       // Retrieve all files in the assets directory
-      const assetFiles = await fs.readdir(assetSourcePath);
+      const assetFiles = fs.readdirSync(assetSourcePath);
 
       // Move each asset file to the resources 'raw' directory
       for (const assetFile of assetFiles) {
@@ -72,7 +72,7 @@ function addIOSResources(config) {
     // Get riv filepaths
     const projectRoot = config.modRequest.projectRoot;
     const assetSourcePath = path.join(projectRoot, ASSET_SOURCE_DIR);
-    const assetFiles = await fs.readdir(assetSourcePath);
+    const assetFiles = fs.readdirSync(assetSourcePath);
     const assetFilesPaths = assetFiles.map(
       (assetFile) => `${assetSourcePath}/${assetFile}`
     );
