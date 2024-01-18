@@ -1,3 +1,8 @@
+/*
+ * If you add an asset you need to run `npx expo prebuild`
+ * If you rename or delete an asset you need to run `npx expo prebuild --clean` to delete them in your android and ios folder as well.
+ */
+
 const {
   withDangerousMod,
   withXcodeProject,
