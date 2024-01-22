@@ -22,6 +22,7 @@ const withCustomAssets = (config) => {
   return config;
 };
 
+// Code inspired by https://github.com/rive-app/rive-react-native/issues/185#issuecomment-1593396573
 function addAndroidResources(config) {
   return withDangerousMod(config, [
     "android",
@@ -61,6 +62,7 @@ function addAndroidResources(config) {
   ]);
 }
 
+// Code inspired by https://github.com/expo/expo/blob/61f8cf8d4b3cf5f8bf61f346476ebdb4aff40545/packages/expo-font/plugin/src/withFontsIos.ts
 function addIOSResources(config) {
   return withXcodeProject(config, async (config) => {
     const project = config.modResults;
