@@ -30,3 +30,7 @@ How to do it in android:
 ### Copyrights
 
 The asset available in this repo was taken among examples of `rive-react-native` repo.
+
+### Contributors
+
+Made with the help of matthieugicquel and cyrilbo
