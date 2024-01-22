@@ -26,3 +26,7 @@ How to do it in android:
 2. `rawDir` should reference `raw/riv` instead of `raw`.
 3. In resource.xml reference to `riv/scanpass.riv`.
 4. Before adding new files, delete the content of the folder `raw/riv` and remove the asset from `resource.xml`
+
+### Copyrights
+
+The asset available in this repo was taken among examples of `rive-react-native` repo.
